@@ -2,7 +2,6 @@
 #include <WiFiUdp.h>
 #include <cmath>
 
-// --- Configuration ---
 const char* ssid = "laptop";
 const char* password = "pppppppp";
 
@@ -15,7 +14,6 @@ const int NUM_APS = 3;
 const double TX_POWER = -43.5;
 const double PATH_LOSS_EXPONENT = 3.7;
 
-// --- Kalman Filter ---
 double kalman_estimate[NUM_APS] = {0.0};
 double kalman_error_estimate[NUM_APS] = {1.0};
 const double kalman_process_noise = 0.125;
@@ -54,7 +52,7 @@ void setup() {
 
 void loop() {
   Serial.println("\nScanning...");
-  // 🔥 FASTER SCAN: passive mode, 80ms per channel
+  // FASTER SCAN: passive mode, 80ms per channel
   int n = WiFi.scanNetworks(false, false, true, 80);  // <-- CHANGED LINE
 
   bool ap_found[NUM_APS] = {false};
@@ -92,7 +90,7 @@ void loop() {
   send_data_udp(data);
 
   WiFi.scanDelete();
-  delay(200);  // <-- Reduced from 500ms to 200ms
+  delay(200);  
 }
 
 double kalman_update(int ap_index, double measurement) {
